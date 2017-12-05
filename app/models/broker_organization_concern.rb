@@ -9,7 +9,7 @@ module BrokerOrganizationConcern
     embeds_one :broker_agency_profile, cascade_callbacks: true, validate: true  ##Broker Concern
 
     accepts_nested_attributes_for :general_agency_profile, :broker_agency_profile
-    
+
     scope :has_general_agency_profile,          ->{ exists(general_agency_profile: true) }
     scope :has_broker_agency_profile,           ->{ exists(broker_agency_profile: true) }
 
@@ -24,7 +24,7 @@ module BrokerOrganizationConcern
     def search_by_general_agency(search_content)
       Organization.has_general_agency_profile.or({legal_name: /#{search_content}/i}, {"fein" => /#{search_content}/i})
     end
-    
+
     def build_query_params(search_params)
       query_params = []
 
@@ -43,7 +43,7 @@ module BrokerOrganizationConcern
 
       query_params
     end
-    
+
     def search_agencies_by_criteria(search_params)
       query_params = build_query_params(search_params)
       if query_params.any?
@@ -52,7 +52,7 @@ module BrokerOrganizationConcern
         self.approved_broker_agencies.broker_agencies_by_market_kind(['both', 'shop'])
       end
     end
-    
+
     def broker_agencies_with_matching_agency_or_broker(search_params)
       if search_params[:q].present?
         orgs2 = self.approved_broker_agencies.broker_agencies_by_market_kind(['both', 'shop']).where({
@@ -75,7 +75,7 @@ module BrokerOrganizationConcern
 
       self.search_agencies_by_criteria(search_params)
     end
-    
+
     def filter_brokers_by_agencies(agencies, brokers)
       agency_ids = agencies.map{|org| org.broker_agency_profile.id}
       brokers.select{ |broker| agency_ids.include?(broker.broker_role.broker_agency_profile_id) }
