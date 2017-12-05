@@ -15,7 +15,7 @@ module BrokerAgencyProfileConcern
 
     field :ach_routing_number, type: String
     field :ach_account_number, type: String
-  
+
     class << self
       # TODO; return as chainable Mongoid::Criteria
       def all
@@ -42,7 +42,7 @@ module BrokerAgencyProfileConcern
       parent_list.reduce([]) { |list, parent_instance| list << parent_instance.broker_agency_profile }
     end
   end
-  
+
   def default_general_agency_profile=(new_default_general_agency_profile = nil)
     if new_default_general_agency_profile.present?
       raise ArgumentError.new("expected GeneralAgencyProfile class") unless new_default_general_agency_profile.is_a? GeneralAgencyProfile
