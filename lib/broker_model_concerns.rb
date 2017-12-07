@@ -17,7 +17,7 @@ module BrokerModelConcerns
     yield(configuration)
     require 'factory_bot_rails'
     require 'money'
-    require 'location_factories'
+    require 'broker_factories'
   end
 
   class Configuration
