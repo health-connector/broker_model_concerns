@@ -37,6 +37,16 @@ module BrokerAgencyProfileConcern
       @active_broker_roles = BrokerRole.find_active_by_broker_agency_profile(self)
     end
 
+    # alias for broker_roles
+    def writing_agents
+      active_broker_roles
+    end
+
+    # alias for broker_roles - deprecate
+    def brokers
+      active_broker_roles
+    end
+
     # has_many candidate_broker_roles
     def candidate_broker_roles
       # return @candidate_broker_roles if defined? @candidate_broker_roles
@@ -47,6 +57,11 @@ module BrokerAgencyProfileConcern
     def inactive_broker_roles
       # return @inactive_broker_roles if defined? @inactive_broker_roles
       @inactive_broker_roles = BrokerRole.find_inactive_by_broker_agency_profile(self)
+    end
+
+    def phone
+      office = organization.primary_office_location
+      office && office.phone.to_s
     end
 
     class << self

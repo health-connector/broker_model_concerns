@@ -7,7 +7,10 @@ module BrokerRoleConcern
     include Mongoid::Document
     include Mongoid::Timestamps
     include AASM
+    include Acapi::Notifiers
 
+
+    base::BROKER_UPDATED_EVENT_NAME = BROKER_UPDATED_EVENT_NAME
     base::PROVIDER_KINDS = PROVIDER_KINDS
     base::MARKET_KINDS_OPTIONS = MARKET_KINDS_OPTIONS
     base::BROKER_CARRIER_APPOINTMENTS = BROKER_CARRIER_APPOINTMENTS
@@ -106,6 +109,10 @@ module BrokerRoleConcern
       self.broker_agency_profile_id.present?
     end
 
+    def notify_updated
+      notify(BROKER_UPDATED_EVENT_NAME, { :broker_id => self.npn } )
+    end
+
     class << self
 
       def find(id)
@@ -186,6 +193,24 @@ module BrokerRoleConcern
         end
       end
     end ## end class << self
+
+    private
+
+      def send_invitation
+        if active?
+          #Implement in model
+          #Invitation.invite_broker!(self)
+        end
+      end
+
+      def notify_broker_denial
+        #UserMailer.broker_denied_notification(self).deliver_now
+      end
+
+      def notify_broker_pending
+        #unchecked_carriers = self.carrier_appointments.select { |k,v| k if v != "true"}
+        #UserMailer.broker_pending_notification(self,unchecked_carriers).deliver_now if unchecked_carriers.present?  || !self.training
+      end
 
     aasm do
       state :applicant, initial: true
@@ -294,6 +319,8 @@ module BrokerRoleConcern
   end
 
   class_methods do
+    BROKER_UPDATED_EVENT_NAME = "acapi.info.events.broker.updated"
+
     PROVIDER_KINDS = %W[broker assister]
 
     MARKET_KINDS_OPTIONS = {

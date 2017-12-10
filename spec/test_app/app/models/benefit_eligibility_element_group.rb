@@ -1,0 +1,3 @@
+class BenefitEligibilityElementGroup
+  include CoreModelConcerns::BenefitEligibilityElementGroupConcern
+end

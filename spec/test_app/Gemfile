@@ -1,13 +1,18 @@
 gem 'broker_model_concerns', path:  File.expand_path("../../../..", __FILE__)
-#gem 'core_model_concerns', path: "~/Work/mass/core_model_concerns"
-gem 'core_model_concerns', git: 'https://github.com/health-connector/core_model_concerns'
+gem 'core_model_concerns', path: "~/Work/mass/core_model_concerns"
+#gem 'core_model_concerns', git: 'https://github.com/health-connector/core_model_concerns'
+gem 'location_model_concerns', path: "~/Work/mass/location_model_concerns"
 
 gem 'acapi', git: "https://github.com/dchbx/acapi.git", branch: 'development'
 gem "config", '~> 1.0.0'
 gem 'aasm', '~> 4.8.0'
 gem 'language_list', '~> 1.1.0'
+gem 'mongoid'
+gem 'mongoid-versioning'
 
 group :test do
+  gem 'forgery'
+
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'simplecov', '0.14.1', :require => false
