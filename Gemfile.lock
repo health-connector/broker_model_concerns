@@ -7,8 +7,9 @@ GIT
       activesupport (~> 4.2.0)
       bunny (~> 1.7.0)
 
-PATH
-  remote: ../core_model_concerns
+GIT
+  remote: https://github.com/health-connector/core_model_concerns
+  revision: b13eb786fc66d6b918ea485221e16ca858fbcdfd
   specs:
     core_model_concerns (0.0.1)
       forgery
@@ -22,8 +23,9 @@ PATH
       mongoid_userstamp
       rails (~> 4.2.3)
 
-PATH
-  remote: ../location_model_concerns
+GIT
+  remote: https://github.com/health-connector/location_model_concerns
+  revision: 08fde4558a1137c18397323c685c06f363e2dcde
   specs:
     location_model_concerns (0.0.1)
       money-rails (~> 1.3.0)
